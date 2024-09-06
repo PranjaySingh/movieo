@@ -1,38 +1,31 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AppLayout from "./ui/AppLayout";
-
-import TopRated from "./pages/TopRated";
-import Popular from "./pages/Popular";
-import Home, { loader as nowPlayingLoader } from "./pages/Home";
-import Genres, { loader as genresLoader } from "./pages/Genres";
-import Genre, { loader as genreMoviesLoader } from "./features/genre/Genre";
+import AppLayout from "./components/AppLayout";
+import Home from "./pages/Home";
+// import { loader as trendingLoader } from "./pages/Home";
+import ExplorePage from "./pages/ExplorePage";
+import DetailsPage from "./pages/DetailsPage";
+import SearchPage from "./pages/SearchPage";
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
     children: [
       {
-        path: "/home",
+        path: "/",
         element: <Home />,
-        loader: nowPlayingLoader,
+        // loader: trendingLoader,
       },
       {
-        path: "/toprated",
-        element: <TopRated />,
+        path: "/:explore",
+        element: <ExplorePage />,
       },
       {
-        path: "/popular",
-        element: <Popular />,
+        path: "/:explore/:id",
+        element: <DetailsPage />,
       },
       {
-        path: "/genres",
-        element: <Genres />,
-        loader: genresLoader,
-      },
-      {
-        path: "/genres/:genreId",
-        element: <Genre />,
-        loader: genreMoviesLoader,
+        path: "/search",
+        element: <SearchPage />,
       },
     ],
   },
