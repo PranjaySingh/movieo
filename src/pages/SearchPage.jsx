@@ -8,6 +8,10 @@ function SearchPage() {
   const [searchData, setSearchData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [searQuery, setSearchQuery] = useState(
+    location?.search.slice(3)?.split("%20")?.join(" ")
+  );
+  const [timeoutId, setTimeoutId] = useState(null);
   const navigate = useNavigate();
 
   async function fetchSearchData() {
@@ -45,15 +49,31 @@ function SearchPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  function handleInputChange(value) {
+    setSearchQuery(value);
+    clearTimeout(timeoutId);
+    setTimeoutId(
+      setTimeout(() => {
+        if (value === "") return;
+        console.log(`searching for ${value}`);
+        navigate(`/search?q=${value}`);
+      }, 1000)
+    );
+  }
+
+  useEffect(() => {
+    return () => clearTimeout(timeoutId);
+  }, [timeoutId]);
+
   return (
     <div className="py-16">
       <div className="lg:hidden my-2 mx-1 sticky top-[72px] z-40">
         <input
           type="text"
           placeholder="search here..."
-          onChange={(e) => navigate(`/search?q=${e.target.value}`)}
+          onChange={(e) => handleInputChange(e.target.value)}
           className="px-4 py-1 text-lg w-full bg-white rounded-full text-neutral-900"
-          value={location?.search?.slice(3)?.split("%20")?.join(" ")}
+          value={searQuery}
         />
       </div>
       <div className="container mx-auto px-3">

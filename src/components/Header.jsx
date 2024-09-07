@@ -1,6 +1,6 @@
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.png";
-import { HiMagnifyingGlass, HiMiniUserCircle } from "react-icons/hi2";
+import { HiMagnifyingGlass } from "react-icons/hi2";
 import { useEffect, useState } from "react";
 import { navigation } from "../utils/navigation";
 
@@ -8,13 +8,30 @@ function Header() {
   const location = useLocation();
   const inputFormQuery = location?.search.slice(3)?.split("%20")?.join(" ");
   const [searchQuery, setSearchQuery] = useState(inputFormQuery);
+  const [timeoutId, setTimeoutId] = useState(null);
   const navigate = useNavigate();
 
+  function handleSearch(value) {
+    setSearchQuery(value);
+    clearTimeout(timeoutId);
+    setTimeoutId(
+      setTimeout(() => {
+        if (value === "") return;
+        console.log(`searching for ${value}`);
+        navigate(`search?q=${value}`);
+      }, 1000)
+    );
+  }
+
   useEffect(() => {
-    if (searchQuery === "") return;
-    navigate(`search?q=${searchQuery}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery]);
+    return () => clearTimeout(timeoutId);
+  }, [timeoutId]);
+
+  // useEffect(() => {
+  //   if (searchQuery === "") return;
+  //   navigate(`search?q=${searchQuery}`);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [searchQuery]);
 
   return (
     <header className="fixed top-0 w-full h-16 bg-black bg-opacity-75 z-40">
@@ -48,7 +65,7 @@ function Header() {
               placeholder="Search here..."
               className="bg-transparent px-4 lg:py-2 py-1 outline-none border-none "
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value)}
             />
             <button className="text-2xl text-yellow-500 ">
               <HiMagnifyingGlass />
