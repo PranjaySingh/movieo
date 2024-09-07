@@ -2,18 +2,27 @@ import { useParams } from "react-router-dom";
 import { discoverContent } from "../utils/apiGetContent";
 import { useEffect, useState } from "react";
 import Card from "../components/Card";
+import Loading from "../components/Loading";
 
 function ExplorePage() {
   const { explore } = useParams();
   const [discoverData, setDiscoverData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function fetchDiscoverContent() {
-    const response = await discoverContent(explore, currentPage);
+    setIsLoading(true);
+    try {
+      const response = await discoverContent(explore, currentPage);
 
-    setDiscoverData((data) => [...data, ...response.results]);
-    setTotalPages(response.total_pages);
+      setDiscoverData((data) => [...data, ...response.results]);
+      setTotalPages(response.total_pages);
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -55,6 +64,7 @@ function ExplorePage() {
             />
           ))}
         </div>
+        {isLoading && <Loading />}
       </div>
     </div>
   );

@@ -16,6 +16,7 @@ function VideoPlayer({ id, onClose, media_type }) {
 
   useEffect(() => {
     fetchVideos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -29,6 +30,7 @@ function VideoPlayer({ id, onClose, media_type }) {
           <iframe
             src={`https://www.youtube.com/embed/${videoData?.key}`}
             className="w-full h-full"
+            allowFullScreen
           />
         ) : (
           <span className="w-full h-full flex items-center justify-center">

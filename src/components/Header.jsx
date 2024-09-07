@@ -17,7 +17,7 @@ function Header() {
     setTimeoutId(
       setTimeout(() => {
         if (value === "") return;
-        console.log(`searching for ${value}`);
+
         navigate(`search?q=${value}`);
       }, 1000)
     );

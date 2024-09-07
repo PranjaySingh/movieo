@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getSearchContent } from "../utils/apiGetContent";
 import Card from "../components/Card";
+import Loading from "../components/Loading";
 
 function SearchPage() {
   const location = useLocation();
@@ -11,17 +12,25 @@ function SearchPage() {
   const [searQuery, setSearchQuery] = useState(
     location?.search.slice(3)?.split("%20")?.join(" ")
   );
+  const [isLoading, setIsLoading] = useState(false);
   const [timeoutId, setTimeoutId] = useState(null);
   const navigate = useNavigate();
 
   async function fetchSearchData() {
-    const response = await getSearchContent(
-      location.search.slice(3),
-      currentPage
-    );
+    setIsLoading(true);
+    try {
+      const response = await getSearchContent(
+        location.search.slice(3),
+        currentPage
+      );
 
-    setSearchData((data) => [...data, ...response.results]);
-    setTotalPages(response.total_pages);
+      setSearchData((data) => [...data, ...response.results]);
+      setTotalPages(response.total_pages);
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -55,7 +64,7 @@ function SearchPage() {
     setTimeoutId(
       setTimeout(() => {
         if (value === "") return;
-        console.log(`searching for ${value}`);
+
         navigate(`/search?q=${value}`);
       }, 1000)
     );
@@ -76,6 +85,7 @@ function SearchPage() {
           value={searQuery}
         />
       </div>
+
       <div className="container mx-auto px-3">
         <h3
           className={`capitalize text-lg lg:text-2xl font-bold my-3 lg:block ${
@@ -93,6 +103,7 @@ function SearchPage() {
             />
           ))}
         </div>
+        {isLoading && <Loading />}
       </div>
     </div>
   );
