@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { useSelector } from "react-redux";
-import VideoPlayer from "./videoPlayer";
+import VideoPlayer from "./VideoPlayer";
 
 function BannerHome() {
   const { trendingData, imageUrl } = useSelector((state) => state.movieo);
