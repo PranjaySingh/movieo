@@ -1,6 +1,5 @@
 const TMDB_URL = "https://api.themoviedb.org/3";
-const TMDB_ACCESS_TOKEN =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MDBhNTAwMjUzNGFlNGIwYTY3YjEwZDY5MmI0ZTdhOCIsIm5iZiI6MTcyNTAzMTQ5NC41MDQ3MjIsInN1YiI6IjY2Yzg4YjJhMDBhNTEyMzVlZmEzM2QwYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.FATzGSkILmJ6tSOQfvN1cx1qqX25ArKa800syUz3N94";
+const TMDB_ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
 
 const options = {
   method: "GET",
