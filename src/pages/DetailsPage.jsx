@@ -196,7 +196,7 @@ function DetailsPage() {
               <Divider />
 
               <h2 className="font-bold text-lg">Cast : </h2>
-              <div className="grid grid-cols-[repeat(auto-fit,minmax(96px,1fr))] gap-3 lg:gap-5 mt-3">
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(96px,1fr))] gap-3 lg:gap-5 mt-3 ">
                 {cast?.cast
                   ?.filter((el) => el.profile_path && el.popularity > 5)
                   .map((cast, index) => (
