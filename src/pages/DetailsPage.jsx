@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import Divider from "../components/Divider";
 import HoriontalCardCarousel from "../components/HoriontalCardCarousel";
-import VideoPlayer from "../components/videoPlayer";
+import VideoPlayer from "../components/VideoPlayer";
 import Loading from "../components/Loading";
 
 function DetailsPage() {
