@@ -33,7 +33,7 @@ function Card({ data, trending = false, index, media_type }) {
       </div>
 
       <div
-        className={`absolute bottom-0 h-18 w-full backdrop-blur-3xl bg-black/60 p-2 hidden group-hover:block space-y-2`}
+        className={`absolute bottom-0 h-18 w-full backdrop-blur-3xl bg-black/60 p-2 lg:hidden lg:group-hover:block space-y-2`}
       >
         <h2 className="text-ellipsis line-clamp-1 text-lg font-semibold">
           {data.title || data.name}
